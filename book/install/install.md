@@ -114,7 +114,7 @@ AlluxioMaster
 http://qingcheng11:19999
 ```
 ####Alluxio集群概要信息  
-![](images/Snip20161211_11.png)  
+![](images/Snip20161211_11.png)   
 
 ####Alluxio透视HDFS信息
 ![](images/Snip20161211_14.png)
