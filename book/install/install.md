@@ -14,18 +14,17 @@ http://www.alluxio.org/download
 3.下载地址
 http://downloads.alluxio.org/downloads/files/1.3.0/alluxio-1.3.0-hadoop2.7-bin.tar.gz
 ```
-
 ```
-5.解压命令
+4.解压命令
 tar -zxvf alluxio-1.3.0-hadoop2.7-bin.tar.gz
 ```
 ```
-6.分发命令
+5.分发命令
 scp -r /bigdata/software/alluxio-1.3.0  qingcheng12:/bigdata/software/
 scp -r /bigdata/software/alluxio-1.3.0  qingcheng13:/bigdata/software/
 ```
 ```
-7.查看命令
+6.查看命令
 tree -L 1 /bigdata/software/alluxio-1.3.0 
 ```
 ![](images/Snip20161211_17.png)      
@@ -51,7 +50,7 @@ tree -L 1 /bigdata/software/alluxio-1.3.0
 ```
 ##二、Alluxio在HA模式下完全分布部署实战
  
-###1.配置flink-conf.yaml文件  
+###1.配置alluxio-env.sh文件  
 ```
 1.配置命令
 cp ${ALLUXIO_HOME}/conf/alluxio-env.sh.template ${ALLUXIO_HOME}/conf/alluxio-env.sh
