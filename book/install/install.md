@@ -117,7 +117,7 @@ http://qingcheng11:19999
 ![](images/Snip20161211_11.png)  
 
 ####Alluxio透视HDFS信息
-![](images/Snip20161211_14.png)  
+![](images/Snip20161211_14.png)
 ![](images/Snip20161211_19.png)  
 
 ####Alluxio的workers信息
