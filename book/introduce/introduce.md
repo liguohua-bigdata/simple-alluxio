@@ -17,7 +17,7 @@
 ```
 
 ##3.Alluxio为大数据生态圈提供统一的命名空间
-![](images/alluxiodiagram-adapter-sitestyle2x-1.png) 
+![](images/namespace.png) 
 ```
 1.Alluxio能够统一多种底层文件系统，屏蔽他们之间的接口和规范的复杂性，对外提供简单的访问方式。
 2.Alluxio能够提供统一文件存储命名空间。
