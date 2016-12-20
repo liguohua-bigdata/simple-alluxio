@@ -16,11 +16,11 @@ $ALLUXIO_HOME/bin/alluxio fs ls -R /input/*/*.csv
 
 ##2.alluxio命令行列表
 
-##2.1查看帮助命令
+###2.1查看帮助命令
 ```
 $ALLUXIO_HOME/bin/alluxio fs
 ```
-##2.2命令行列表解释
+###2.2命令行列表解释
 |操作|语法|描述|
 |---|---|---|
 |load|load "path"|将底层文件系统的文件或者目录加载到Alluxio中|
