@@ -4,7 +4,7 @@ alluxio为我们提供了两种编程API。
 1.为了更好的性能，它提供了原始的JavaAPI.
 2.为了兼容Hadoop代码它提供了HadoopAPI。
 ```
-#二、alluxio原始JavaAPI实战
+#二、alluxio本地运行及数据准备
 ```
 由于JavaAPI在开发时在本地，它默认会连接本地alluxio,所以在开发时，建议启动本地alluxio.
 ```
