@@ -37,4 +37,14 @@
   load命令进行加载。
 ```
 ##5.Alluxio支持同时挂载多个文件系统
+![](images/screenshot_unified.png) 
+```
+1.通过alluxio.underfs.address指定Alluxio 的”primary storage”
+  图中主存储（”primary storage”）是HDFS，其中可以包含用户的文件夹；
+2.通过挂载API能够在Alluxio中挂载或删除多种数据源，API如下：
+  bool mount(String alluxioPath, String ufsPath);
+  bool unmount(String alluxioPath);
+  图中挂载S3文件系统到Data文件夹下，命令如下：
+  mount(alluxio://host:port/Data, s3://bucket/directory)
+```
 
