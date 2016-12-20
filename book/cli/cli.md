@@ -1,10 +1,17 @@
 ##1.alluxio命令行说明
 ```
 1.全路径使用方式
-$ALLUXIO_HOME/bin/alluxio fs
+$ALLUXIO_HOME/bin/alluxio fs ls -R alluxio://qingcheng11:19998/input/
+
 2.短路径使用方式
+$ALLUXIO_HOME/bin/alluxio fs ls -R /input/
 
 3.通配符使用方式
+3.1以input目录下spar开头的所有文件
+$ALLUXIO_HOME/bin/alluxio fs ls -R /input/spar*
+
+3.2input目录下所有目录中的所有csv文件
+$ALLUXIO_HOME/bin/alluxio fs ls -R /input/*/*.csv
 ```
 
 
