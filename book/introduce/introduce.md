@@ -36,4 +36,5 @@
   不会加载具体文件数据，若要将其加载到Alluxio， 可以用FileInStream读数据，或者通过Alluxio Shell中的
   load命令进行加载。
 ```
+##5.Alluxio支持同时挂载多个文件系统
 
