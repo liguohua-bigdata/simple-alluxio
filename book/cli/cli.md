@@ -14,7 +14,6 @@ $ALLUXIO_HOME/bin/alluxio fs ls -R /input/spar*
 $ALLUXIO_HOME/bin/alluxio fs ls -R /input/*/*.csv
 ```
 
-
 ##2.alluxio命令行列表
 ![](images/Snip20161220_3.png) 
 
@@ -54,7 +53,33 @@ $ALLUXIO_HOME/bin/alluxio fs ls -R /input/*/*.csv
 |touch|touch "path"|在指定路径创建一个空文件|
 
 	
-	
+##3.alluxio常用命令实战
+###3.1命令ls
+```
+//列出input目录下的所有文件，包含子目录。
+$ALLUXIO_HOME/bin/alluxio fs ls -R /input/
+```
+![](images/Snip20161220_4.png) 
+```
+1.第一列为权限列表，有10个占位符组成。
+  第1个占位符表示文件类型，文件用-，目录用d
+  2-4个占位符表示用户权限,5-7表示组权限，8-10表示其他用户权限
+  x表示执行权限，w表示写入权限，r表示读取权限。
+2.第二列表示文件所属的用户。
+
+3.第三列表示文件所属的组。
+
+4.第四列表示文件大小
+
+5.第五列表示文件创建时间
+
+6.第六列表示文件是否在内存中
+  如果是目录显示Directory，如果是文件显示Not In Memory或In Memory
+  
+7.第七列表示文件的路径信息。
+```
+
+
 		
 		
 		
