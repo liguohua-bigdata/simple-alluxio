@@ -1,4 +1,4 @@
-package fileSystem;
+package fileSystem.javaapi;
 
 import alluxio.AlluxioURI;
 import alluxio.client.file.FileOutStream;
@@ -7,25 +7,29 @@ import alluxio.exception.AlluxioException;
 
 import java.io.IOException;
 
-public class AlluxioFileUtils {
+public class AlluxioWriteFile001 {
     public static void main(String[] args) {
+        //1.获取文件系统FileSystem
         FileSystem fs = FileSystem.Factory.get();
-        AlluxioURI path = new AlluxioURI("alluxio://qingcheng11:19998/myFile");
+        //2.创建文件路径 AlluxioURI
+        AlluxioURI path = new AlluxioURI("/alluxiotest/writetest001.txt");
         FileOutStream out = null;
         try {
+            //3.打开文件输出流
             out = fs.createFile(path);
+            //4.输出文件内容
             out.write("this is test ".getBytes());
         } catch (IOException e) {
             e.printStackTrace();
         } catch (AlluxioException e) {
             e.printStackTrace();
-        }finally {
+        } finally {
             try {
+                //5.关闭输入流，释放资源
                 out.close();
             } catch (IOException e) {
                 e.printStackTrace();
             }
         }
-
     }
 }
