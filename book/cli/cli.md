@@ -1,3 +1,53 @@
+##1.alluxio命令行说明
+```
+1.全路径使用方式
+$ALLUXIO_HOME/bin/alluxio fs
+2.短路径使用方式
+
+3.通配符使用方式
+```
+
+
+##2.alluxio命令行列表
+```
+[root@qingcheng12 software]# $ALLUXIO_HOME/bin/alluxio fs
+Usage: java AlluxioShell
+[cat <path>]                                         Prints the file's contents to the console.
+[checksum <Alluxio path>]                            Calculates the md5 checksum of a file in the Alluxio filesystem.
+[chgrp [-R] <group> <path>]                          Changes the group of a file or directory specified by args. Specify -R to change the group recursively.
+[chmod [-R] <mode> <path>]                           Changes the permission of a file or directory specified by args. Specify -R to change the permission recursively.
+[chown [-R] <owner> <path>]                          Changes the owner of a file or directory specified by args. Specify -R to change the owner recursively.
+[copyFromLocal <src> <remoteDst>]                    Copies a file or a directory from local filesystem to Alluxio filesystem.
+[copyToLocal <src> <localDst>]                       Copies a file or a directory from the Alluxio filesystem to the local filesystem.
+[count <path>]                                       Displays the number of files and directories matching the specified prefix.
+[cp [-R] <src> <dst>]                                Copies a file or a directory in the Alluxio filesystem. The -R flag is needed to copy directories.
+[createLineage <inputFile1,...> <outputFile1,...> [<cmd_arg1> <cmd_arg2> ...]]   Creates a lineage.
+[deleteLineage <lineageId> <cascade(true|false)>]    Deletes a lineage. If cascade is specified as true, dependent lineages will also be deleted.
+[du <path>]                                          Displays the size of the specified file or directory.
+[fileInfo <path>]                                    Displays all block info for the specified file.
+[free <path>]                                        Frees the space occupied by a file or a directory in Alluxio.
+[getCapacityBytes]                                   Gets the capacity of the Alluxio file system.
+[getUsedBytes]                                       Gets number of bytes used in the Alluxio file system.
+[leader]                                             Prints the current leader master host name.
+[listLineages]                                       Lists all lineages.
+[load <path>]                                        Loads a file or directory in Alluxio space, makes it resident in memory.
+[loadMetadata <path>]                                Loads metadata for the given Alluxio path from the under file system.
+[location <path>]                                    Displays the list of hosts storing the specified file.
+[ls [-R] [-f] <path>]                                Displays information for all files and directories directly under the specified path. Specify -R to display files and directories recursively. Specify -f to force loading files in the directory.
+[mkdir <path1> [path2] ... [pathn]]                  Creates the specified directories, including any parent directories that are required.
+[mount [-readonly] [-shared] [-P <properties file name>] <alluxioPath> <ufsURI>]   Mounts a UFS path onto an Alluxio path.
+[mv <src> <dst>]                                     Renames a file or directory.
+[persist <alluxioPath1> [alluxioPath2] ... [alluxioPathn]]   Persists files or directories currently stored only in Alluxio to the UnderFileSystem.
+[pin <path>]                                         Pins the given file or directory in memory (works recursively for directories). Pinned files are never evicted from memory, unless TTL is set.
+[report <path>]                                      Reports to the master that a file is lost.
+[rm [-R] <path>]                                     Removes the specified file. Specify -R to remove file or directory recursively.
+[setTtl <path> <time to live(in milliseconds)>]      Sets a new TTL value for the file at path.
+[tail -c <number of bytes> <path>]                   Prints the file's last n bytes (by default, 1KB) to the console.
+[touch <path>]                                       Creates a 0 byte file. The file will be written to the under file system.
+[unmount <alluxioPath>]                              Unmounts an Alluxio path.
+[unpin <path>]                                       Unpins the given file or folder from memory (works recursively for a directory).
+[unsetTtl <path>]                                    Unsets the TTL value for the given path.
+```
 |操作|语法|描述|
 |---|---|---|
 |load|load "path"|将底层文件系统的文件或者目录加载到Alluxio中|
