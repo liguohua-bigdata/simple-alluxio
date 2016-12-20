@@ -57,7 +57,7 @@ $ALLUXIO_HOME/bin/alluxio fs
 |touch|touch "path"|在指定路径创建一个空文件|
 
 	
-##3.alluxio常用命令实战
+##3.alluxio常用命令操作实战
 ###3.1命令ls
 ```
 //列出input目录下的所有文件，包含子目录。
