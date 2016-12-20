@@ -1,0 +1,11 @@
+<component name="libraryTable">
+  <library name="alluxio-assemblies-1.3.0-jar-with-dependencies">
+    <CLASSES>
+      <root url="jar:///Applications/alluxio-1.3.0/assembly/target/alluxio-assemblies-1.3.0-jar-with-dependencies.jar!/" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES>
+      <root url="jar:///Applications/alluxio-1.3.0/assembly/target/alluxio-assemblies-1.3.0-jar-with-dependencies.jar!/" />
+    </SOURCES>
+  </library>
+</component>

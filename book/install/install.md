@@ -124,3 +124,5 @@ http://qingcheng11:19999
 ![](images/Snip20161211_15.png)  
 ####Alluxio在HDFS上注册的信息
 ![](images/Snip20161211_20.png)  
+
+
