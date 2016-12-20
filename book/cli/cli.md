@@ -15,8 +15,6 @@ $ALLUXIO_HOME/bin/alluxio fs ls -R /input/*/*.csv
 ```
 
 ##2.alluxio命令行列表
-![](images/Snip20161220_3.png) 
-
 |操作|语法|描述|
 |---|---|---|
 |load|load "path"|将底层文件系统的文件或者目录加载到Alluxio中|
