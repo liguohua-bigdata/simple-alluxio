@@ -2,6 +2,7 @@ package fileSystem.javaapi;
 
 import alluxio.AlluxioURI;
 import alluxio.client.ReadType;
+import alluxio.client.WriteType;
 import alluxio.client.file.FileSystem;
 import alluxio.client.file.URIStatus;
 import alluxio.client.file.options.CreateFileOptions;
@@ -58,14 +59,56 @@ public class AlluxioFsUitls {
         }
     }
 
-    public static void createFile(String filePath, String content) {
-        createFile(filePath, content, CreateFileOptions.defaults());
+    /**
+     * 此方法用于创建文件，并向文件中输出内容WriteType.ASYNC_THROUGH
+     * 数据被同步地写入到Alluxio的Worker，并异步地写入到底层存储系统。处于实验阶段。
+     *
+     * @param filePath 文件路径
+     * @param content  向文件中输出的内容
+     */
+    public static void createFileMustAsysncThroughWriteTpye(String filePath, String content) {
+        createFile(filePath, content, CreateFileOptions.defaults().setWriteType(WriteType.ASYNC_THROUGH));
     }
 
     /**
-     * 此方法用于创建文件，并向文件中输出内容
+     * 此方法用于创建文件，并向文件中输出内容WriteType.CACHE_THROUGH
+     * 数据被同步地写入到Alluxio的Worker和底层存储系统。
      *
      * @param filePath 文件路径
+     * @param content  向文件中输出的内容
+     */
+    public static void createFileMustCacheThroughWriteTpye(String filePath, String content) {
+        createFile(filePath, content, CreateFileOptions.defaults().setWriteType(WriteType.CACHE_THROUGH));
+    }
+
+    /**
+     * 此方法用于创建文件，并向文件中输出内容WriteType.THROUGH
+     * 数据被同步地写入到底层存储系统。但不会被写入到Alluxio的Worker。
+     *
+     * @param filePath 文件路径
+     * @param content  向文件中输出的内容
+     */
+    public static void createFileMustThroughWriteTpye(String filePath, String content) {
+        createFile(filePath, content, CreateFileOptions.defaults().setWriteType(WriteType.THROUGH));
+    }
+
+    /**
+     * 此方法用于创建文件，并向文件中输出内容WriteType.MUST_CACHE
+     * 数据被同步地写入到Alluxio的Worker。但不会被写入到底层存储系统。这是默认写类型。
+     *
+     * @param filePath 文件路径
+     * @param content  向文件中输出的内容
+     */
+    public static void createFileMustCacheWriteTpye(String filePath, String content) {
+        createFile(filePath, content, CreateFileOptions.defaults().setWriteType(WriteType.MUST_CACHE));
+    }
+
+    /**
+     * 方法用于创建文件，并向文件中输出内容
+     *
+     * @param filePath 文件路径
+     * @param content  向文件中输出的内容
+     * @param options  CreateFileOptions
      */
     public static void createFile(String filePath, String content, CreateFileOptions options) {
         //1.创建文件路径 AlluxioURI
@@ -97,9 +140,12 @@ public class AlluxioFsUitls {
     }
 
     /**
-     * 此方法用于读取alluxio文件
+     * 此方法用于读取alluxio文件ReadType.CACHE_PROMOTE
+     * <p>
+     * 如果读取的数据在Worker上时，该数据被移动到Worker的最高层。如果该数据不在本地Worker的Alluxio存储中，
+     * 那么就将一个副本添加到本地Alluxio Worker中，用于每次完整地读取数据快。这是默认的读类型。
      *
-     * @param filePath 文件路径ReadType.CACHE_PROMOTE
+     * @param filePath 文件路径
      */
     public static void openFilePromoteCacheReadType(String filePath) {
         openFile(filePath, OpenFileOptions.defaults().setReadType(ReadType.CACHE_PROMOTE));
@@ -107,6 +153,7 @@ public class AlluxioFsUitls {
 
     /**
      * 此方法用于读取alluxio文件ReadType.NO_CACHE
+     * 不会创建副本
      *
      * @param filePath 文件路径
      */
@@ -116,6 +163,7 @@ public class AlluxioFsUitls {
 
     /**
      * 此方法用于读取alluxio文件ReadType.CACHE
+     * 如果该数据不在本地Worker的Alluxio存储中，那么就将一个副本添加到本地Alluxio Worker中，用于每次完整地读取数据快。
      *
      * @param filePath 文件路径
      */
