@@ -577,8 +577,8 @@ public class AlluxioFsUitls {
             if (fs.exists(sourcepath)) {
                 fs.rename(sourcepath, distpath);
             }
-            //3.判定目标文件是否存在，来判定重命名是否成功
-            return fs.exists(distpath);
+            //3.判定源文件和目标文件是否存在，来判定重命名是否成功
+             return ((fs.exists(distpath))&&(!fs.exists(sourcepath)));
         } catch (IOException e) {
             e.printStackTrace();
         } catch (AlluxioException e) {
