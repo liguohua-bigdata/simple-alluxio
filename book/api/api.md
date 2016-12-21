@@ -250,7 +250,8 @@ public class AlluxioFsUitls {
      * @param contents 向文件中输出的内容
      * @return 文件创建，是否成功
      */
-    public static boolean createFileMustAsysncThroughWriteTpye(String filePath, List<String> contents) {
+    public static boolean createFileMustAsysncThroughWriteTpye(String filePath,
+    List<String> contents) {
         return createFile(filePath, contents,
                 CreateFileOptions.defaults().setWriteType(WriteType.ASYNC_THROUGH));
     }
@@ -263,7 +264,8 @@ public class AlluxioFsUitls {
      * @param contents 向文件中输出的内容
      * @return 文件创建，是否成功
      */
-    public static boolean createFileMustCacheThroughWriteTpye(String filePath, List<String> contents) {
+    public static boolean createFileMustCacheThroughWriteTpye(String filePath,
+    List<String> contents) {
         return createFile(filePath, contents,
                 CreateFileOptions.defaults().setWriteType(WriteType.CACHE_THROUGH));
     }
@@ -302,7 +304,8 @@ public class AlluxioFsUitls {
      * @param options  CreateFileOptions
      * @return 文件创建，是否成功
      */
-    public static boolean createFile(String filePath, List<String> contents, CreateFileOptions options) {
+    public static boolean createFile(String filePath, List<String> contents,
+    CreateFileOptions options) {
         //1.创建文件路径 AlluxioURI
         AlluxioURI path = new AlluxioURI(filePath);
         BufferedWriter writer = null;
