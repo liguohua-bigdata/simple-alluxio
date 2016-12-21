@@ -5,6 +5,6 @@ package fileSystem.javaapi;
  */
 public class AlluxioFsUitlsTest {
     public static void main(String[] args) {
-        AlluxioFsUitls.openFile("/alluxiotest/rename.MD");
+        AlluxioFsUitls.openFile("/alluxiotest/README.MD");
     }
 }

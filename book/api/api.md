@@ -120,6 +120,37 @@ public class AlluxioWriteFile001 {
 ```
 ###执行效果
 ![](images/Snip20161220_7.png) 
+#五、alluxio的存储系统和IO选项
+##1.alluxio的存储系统
+```
+alluxio视野中有两种存储
+1.alluxio自己管理的存储，包括内存，SSD,HDD.
+2.alluxio的底层文件系统，包括HDFS,S3,Swift,ceph等
+```
+##2.alluxio的IO选项
+```
+因为有自己管理的存储和底层存储两种系统，因此在操作自己管理的存储系统的时候如何操作底层存储就成了问题。
+1.在读取自己管理的存储系统时候怎样操作底层存储系统。ReadType
+2.在写入自己管理的存储系统时候怎样操作底层存储系统。WriteType
+```
+
+##3.alluxio的ReadType
+|读类型|行为|
+|---|---|
+|CACHE_PROMOTE|如果读取的数据在Worker上时，该数据被移动到Worker的最高层。如果该数据不在本地Worker的Alluxio存储中，那么就将一个副本添加到本地Alluxio Worker中，用于每次完整地读取数据快。这是默认的读类型。|
+|CACHE|如果该数据不在本地Worker的Alluxio存储中，那么就将一个副本添加到本地Alluxio Worker中，用于每次完整地读取数据快。|
+|NO_CACHE|不会创建副本|
+
+	
+##4.alluxio的WriteType
+|写类型|行为|
+|---|---|
+|CACHE_THROUGH|数据被同步地写入到Alluxio的Worker和底层存储系统。|
+|MUST_CACHE|数据被同步地写入到Alluxio的Worker。但不会被写入到底层存储系统。这是默认写类型。|
+|THROUGH|数据被同步地写入到底层存储系统。但不会被写入到Alluxio的Worker。|
+|ASYNC_THROUGH|	数据被同步地写入到Alluxio的Worker，并异步地写入到底层存储系统。处于实验阶段。|
+
+
 #五、封装alluxio原始JavaAPI工具类
 ###封装原理
 ```

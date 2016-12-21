@@ -4,6 +4,7 @@ import alluxio.AlluxioURI;
 import alluxio.client.file.FileSystem;
 import alluxio.client.file.URIStatus;
 import alluxio.client.file.options.CreateFileOptions;
+import alluxio.client.file.options.OpenFileOptions;
 import alluxio.exception.AlluxioException;
 
 import java.io.BufferedInputStream;
@@ -55,15 +56,17 @@ public class AlluxioFsUitls {
             e.printStackTrace();
         }
     }
+
     public static void createFile(String filePath, String content) {
-        createFile(filePath,content,CreateFileOptions.defaults());
+        createFile(filePath, content, CreateFileOptions.defaults());
     }
+
     /**
      * 此方法用于创建文件，并向文件中输出内容
      *
      * @param filePath 文件路径
      */
-    public static void createFile(String filePath, String content,CreateFileOptions options) {
+    public static void createFile(String filePath, String content, CreateFileOptions options) {
         //1.创建文件路径 AlluxioURI
         AlluxioURI path = new AlluxioURI(filePath);
         BufferedOutputStream bo = null;
@@ -71,7 +74,7 @@ public class AlluxioFsUitls {
             //2.打开文件输出流,使用BufferedOutputStream输出
             if (!fs.exists(path)) {
 
-                bo = new BufferedOutputStream(fs.createFile(path,options));
+                bo = new BufferedOutputStream(fs.createFile(path, options));
                 //3.输出文件内容
                 bo.write(content.getBytes());
             }
@@ -92,19 +95,24 @@ public class AlluxioFsUitls {
         }
     }
 
+    public static void openFile(String filePath) {
+
+        openFile(filePath, OpenFileOptions.defaults());
+    }
+
     /**
      * 此方法用于读取alluxio文件
      *
      * @param filePath 文件路径
      */
-    public static void openFile(String filePath) {
+    public static void openFile(String filePath, OpenFileOptions options) {
         //2.创建文件路径 AlluxioURI
         AlluxioURI path = new AlluxioURI(filePath);
         BufferedInputStream bf = null;
         try {
             //3.打开文件输入流，使用BufferedInputStream读取
             if (fs.exists(path)) {
-                bf = new BufferedInputStream(fs.openFile(path));
+                bf = new BufferedInputStream(fs.openFile(path, options));
                 //4.读取文件内容
                 byte[] buffer = new byte[1024];
                 for (int len = 0; (len = bf.read(buffer)) != -1; ) {
