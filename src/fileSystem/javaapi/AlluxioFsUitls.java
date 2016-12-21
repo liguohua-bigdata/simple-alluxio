@@ -1,6 +1,7 @@
 package fileSystem.javaapi;
 
 import alluxio.AlluxioURI;
+import alluxio.client.ReadType;
 import alluxio.client.file.FileSystem;
 import alluxio.client.file.URIStatus;
 import alluxio.client.file.options.CreateFileOptions;
@@ -95,15 +96,49 @@ public class AlluxioFsUitls {
         }
     }
 
-    public static void openFile(String filePath) {
+    /**
+     * 此方法用于读取alluxio文件
+     *
+     * @param filePath 文件路径ReadType.CACHE_PROMOTE
+     */
+    public static void openFilePromoteCacheReadType(String filePath) {
+        openFile(filePath, OpenFileOptions.defaults().setReadType(ReadType.CACHE_PROMOTE));
+    }
+
+    /**
+     * 此方法用于读取alluxio文件ReadType.NO_CACHE
+     *
+     * @param filePath 文件路径
+     */
+    public static void openFileNoCacheReadType(String filePath) {
+        openFile(filePath, OpenFileOptions.defaults().setReadType(ReadType.NO_CACHE));
+    }
+
+    /**
+     * 此方法用于读取alluxio文件ReadType.CACHE
+     *
+     * @param filePath 文件路径
+     */
+    public static void openFileCacheReadType(String filePath) {
+        openFile(filePath, OpenFileOptions.defaults().setReadType(ReadType.CACHE));
+    }
+
+    /**
+     * 此方法用于读取alluxio文件DefalutReadType
+     *
+     * @param filePath 文件路径
+     */
+    public static void openFileDefalutReadType(String filePath) {
 
         openFile(filePath, OpenFileOptions.defaults());
     }
+
 
     /**
      * 此方法用于读取alluxio文件
      *
      * @param filePath 文件路径
+     * @param options  文件读取选项
      */
     public static void openFile(String filePath, OpenFileOptions options) {
         //2.创建文件路径 AlluxioURI

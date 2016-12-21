@@ -5,6 +5,6 @@ package fileSystem.javaapi;
  */
 public class AlluxioFsUitlsTest {
     public static void main(String[] args) {
-        AlluxioFsUitls.openFile("/alluxiotest/README.MD");
+        AlluxioFsUitls.openFileDefalutReadType("/alluxiotest/README.MD");
     }
 }
