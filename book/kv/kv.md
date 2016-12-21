@@ -177,7 +177,34 @@ public class AlluxioKvUtils {
     //创建键值对系统实例
     private static final KeyValueSystem kvs = KeyValueSystem.Factory.create();
     private static final String CHAR_SET_UTF8 = "UTF-8";
+    
+    /**
+     * 此方法用于获取KVStore的大小
+     *
+     * @param storePath KVStore路径
+     */
+    public static int size(String storePath) {
 
+        KeyValueStoreReader reader = null;
+        try {
+            reader = kvs.openStore(new AlluxioURI(storePath));
+            return reader.size();
+        } catch (IOException e) {
+            e.printStackTrace();
+        } catch (AlluxioException e) {
+            e.printStackTrace();
+        }finally {
+            if (reader!=null){
+                try {
+                    reader.close();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
+        }
+        return -1;
+    }
+    
     /**
      * 此方法用于删除KVStore
      *
