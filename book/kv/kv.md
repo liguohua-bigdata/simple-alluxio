@@ -334,7 +334,8 @@ public class AlluxioKvUtils {
      * @param charSet   charSet
      * @return collection
      */
-    public static Collection<String> get2Collection(String storePath, List<String> keys, String charSet) {
+    public static Collection<String> get2Collection(String storePath,
+    List<String> keys, String charSet) {
         Map<String, String> map = get2Map(storePath, keys, charSet);
         return map.values();
     }
