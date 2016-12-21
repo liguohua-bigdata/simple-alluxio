@@ -137,8 +137,8 @@ alluxio视野中有两种存储
 ##3.alluxio的ReadType
 |读类型|行为|
 |---|---|
-|CACHE_PROMOTE|如果读取的数据在Worker上时，该数据被移动到Worker的最高层。如果该数据不在本地Worker的Alluxio存储中，那么就将一个副本添加到本地Alluxio Worker中，用于每次完整地读取数据快。这是默认的读类型。|
-|CACHE|如果该数据不在本地Worker的Alluxio存储中，那么就将一个副本添加到本地Alluxio Worker中，用于每次完整地读取数据快。|
+|CACHE_PROMOTE|如果读取的数据在Worker上时，该数据被移动到Worker的最高层。如果该数据不在本地Worker的Alluxio存储中，那么就将一个副本添加到本地Alluxio Worker中，用于每次完整地读取数据块。这是默认的读类型。|
+|CACHE|如果该数据不在本地Worker的Alluxio存储中，那么就将一个副本添加到本地Alluxio Worker中，用于每次完整地读取数据块。|
 |NO_CACHE|不会创建副本|
 
 ##4.alluxio的WriteType
@@ -326,7 +326,7 @@ public class AlluxioFsUitls {
      * 此方法用于读取alluxio文件ReadType.CACHE_PROMOTE
      * <p>
      * 如果读取的数据在Worker上时，该数据被移动到Worker的最高层。如果该数据不在本地Worker的Alluxio存储中，
-     * 那么就将一个副本添加到本地Alluxio Worker中，用于每次完整地读取数据快。这是默认的读类型。
+     * 那么就将一个副本添加到本地Alluxio Worker中，用于每次完整地读取数据块。这是默认的读类型。
      *
      * @param filePath 文件路径
      */
@@ -346,7 +346,7 @@ public class AlluxioFsUitls {
 
     /**
      * 此方法用于读取alluxio文件ReadType.CACHE
-     * 如果该数据不在本地Worker的Alluxio存储中，那么就将一个副本添加到本地Alluxio Worker中，用于每次完整地读取数据快。
+     * 如果该数据不在本地Worker的Alluxio存储中，那么就将一个副本添加到本地Alluxio Worker中，用于每次完整地读取数据块。
      *
      * @param filePath 文件路径
      */
