@@ -250,7 +250,8 @@ public class AlluxioFsUitls {
      * @param content  向文件中输出的内容
      */
     public static void createFileMustAsysncThroughWriteTpye(String filePath, String content) {
-        createFile(filePath, content, CreateFileOptions.defaults().setWriteType(WriteType.ASYNC_THROUGH));
+        createFile(filePath, content,
+        CreateFileOptions.defaults().setWriteType(WriteType.ASYNC_THROUGH));
     }
 
     /**
@@ -261,7 +262,8 @@ public class AlluxioFsUitls {
      * @param content  向文件中输出的内容
      */
     public static void createFileMustCacheThroughWriteTpye(String filePath, String content) {
-        createFile(filePath, content, CreateFileOptions.defaults().setWriteType(WriteType.CACHE_THROUGH));
+        createFile(filePath, content,
+        CreateFileOptions.defaults().setWriteType(WriteType.CACHE_THROUGH));
     }
 
     /**
@@ -283,7 +285,8 @@ public class AlluxioFsUitls {
      * @param content  向文件中输出的内容
      */
     public static void createFileMustCacheWriteTpye(String filePath, String content) {
-        createFile(filePath, content, CreateFileOptions.defaults().setWriteType(WriteType.MUST_CACHE));
+        createFile(filePath, content,
+        CreateFileOptions.defaults().setWriteType(WriteType.MUST_CACHE));
     }
 
     /**
@@ -346,7 +349,8 @@ public class AlluxioFsUitls {
 
     /**
      * 此方法用于读取alluxio文件ReadType.CACHE
-     * 如果该数据不在本地Worker的Alluxio存储中，那么就将一个副本添加到本地Alluxio Worker中，用于每次完整地读取数据块。
+     * 如果该数据不在本地Worker的Alluxio存储中，那么就将一个副本添加到本地Alluxio Worker中，
+     * 用于每次完整地读取数据块。
      *
      * @param filePath 文件路径
      */
