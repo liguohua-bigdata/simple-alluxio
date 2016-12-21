@@ -10,9 +10,57 @@ import java.nio.charset.CharsetDecoder;
 import java.util.*;
 
 public class AlluxioKvUtils {
-    //1.创建键值对系统实例
+    //创建键值对系统实例
     private static final KeyValueSystem kvs = KeyValueSystem.Factory.create();
     private static final String CHAR_SET_UTF8 = "UTF-8";
+
+    /**
+     * 此方法用于删除KVStore
+     *
+     * @param storePath KVStore路径
+     */
+    public static void deleteStore(String storePath) {
+        try {
+            kvs.deleteStore(new AlluxioURI(storePath));
+        } catch (IOException e) {
+            e.printStackTrace();
+        } catch (AlluxioException e) {
+            e.printStackTrace();
+        }
+    }
+
+    /**
+     * 此方法用于重命名 KVStore
+     *
+     * @param oldPath oldPath
+     * @param newPath newPath
+     */
+    public static void renameStore(String oldPath, String newPath) {
+        try {
+            kvs.renameStore(new AlluxioURI(oldPath), new AlluxioURI(newPath));
+        } catch (IOException e) {
+            e.printStackTrace();
+        } catch (AlluxioException e) {
+            e.printStackTrace();
+        }
+    }
+
+    /**
+     * 此方法用于合并两个 KVStore,会删除fromKVStore
+     *
+     * @param fromPath fromPath
+     * @param toPath   toPath
+     */
+    public static void mergeStore(String fromPath, String toPath) {
+        try {
+            kvs.mergeStore(new AlluxioURI(fromPath), new AlluxioURI(toPath));
+        } catch (IOException e) {
+            e.printStackTrace();
+        } catch (AlluxioException e) {
+            e.printStackTrace();
+        }
+    }
+
 
     /**
      * 此方法用于写入map数据到KVStore
@@ -211,6 +259,16 @@ public class AlluxioKvUtils {
     public static Collection<String> getAll2Collection(String storePath, String charSet) {
         Map<String, String> map = getAll2Map(storePath, charSet);
         return map.values();
+    }
+
+    /**
+     * 此方法用于读取KVStore集合到map
+     *
+     * @param storePath KVStore路径
+     * @return map
+     */
+    public static Map<String, String> getAll2Map(String storePath) {
+        return getAll2Map(storePath, CHAR_SET_UTF8);
     }
 
     /**
