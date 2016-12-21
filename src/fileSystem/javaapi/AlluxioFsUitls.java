@@ -3,6 +3,7 @@ package fileSystem.javaapi;
 import alluxio.AlluxioURI;
 import alluxio.client.file.FileSystem;
 import alluxio.client.file.URIStatus;
+import alluxio.client.file.options.CreateFileOptions;
 import alluxio.exception.AlluxioException;
 
 import java.io.BufferedInputStream;
@@ -54,20 +55,23 @@ public class AlluxioFsUitls {
             e.printStackTrace();
         }
     }
-
+    public static void createFile(String filePath, String content) {
+        createFile(filePath,content,CreateFileOptions.defaults());
+    }
     /**
      * 此方法用于创建文件，并向文件中输出内容
      *
      * @param filePath 文件路径
      */
-    public static void createFile(String filePath, String content) {
+    public static void createFile(String filePath, String content,CreateFileOptions options) {
         //1.创建文件路径 AlluxioURI
         AlluxioURI path = new AlluxioURI(filePath);
         BufferedOutputStream bo = null;
         try {
             //2.打开文件输出流,使用BufferedOutputStream输出
             if (!fs.exists(path)) {
-                bo = new BufferedOutputStream(fs.createFile(path));
+
+                bo = new BufferedOutputStream(fs.createFile(path,options));
                 //3.输出文件内容
                 bo.write(content.getBytes());
             }
