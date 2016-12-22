@@ -12,5 +12,6 @@ public class AlluxioFsUitlsTest {
         for (String s:list){
             System.out.println(s);
         }
+
     }
 }
