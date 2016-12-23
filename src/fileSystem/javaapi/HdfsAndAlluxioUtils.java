@@ -15,10 +15,11 @@ import java.util.List;
 /**
  * Created by liguohua on 22/12/2016.
  */
-public class HdfsUtils {
+public class HdfsAndAlluxioUtils {
 
-    private static final String NOT_EXEXTS_EXECEPTION_MSG = "path is not exist:";
-    private static final String NOT_FILE_EXECEPTION_MSG = "path is a directory not a file:";
+    private static final String NOT_EXEXTS_EXECEPTION_MSG = "Path is not exist:";
+    private static final String NOT_DIR_EXECEPTION_MSG = "Path is not a directory:";
+    private static final String NOT_FILE_EXECEPTION_MSG = "path is not a file:";
     private static String PATH_DELIMER = "/";
 
     /**
@@ -142,7 +143,7 @@ public class HdfsUtils {
             File localFile = new File(src);
             //如果本地文件不存在，直接返回
             if (!localFile.exists()) {
-                throw new RuntimeException(NOT_EXEXTS_EXECEPTION_MSG + src);
+                return;
             }
             if (isPath(dist)) {
                 if (!fs.exists(remoteDirPath)) {
@@ -244,11 +245,8 @@ public class HdfsUtils {
         FileSystem fs = getFileSystem(fileSystemInfo);
         Path uri = new Path(path);
         try {
-            if (fs.exists(uri)) {
-                return fs.isFile(uri);
-            } else {
-                throw new RuntimeException(NOT_EXEXTS_EXECEPTION_MSG + path);
-            }
+            pathNotExistCheck(path, fs, uri);
+            return fs.isFile(uri);
         } catch (IOException e) {
             e.printStackTrace();
         } finally {
@@ -301,6 +299,64 @@ public class HdfsUtils {
     }
 
     /**
+     * 此方法用于查看文件中损坏的块
+     *
+     * @param fileSystemInfo 文件系统信息
+     * @param path           文件路径
+     * @return 查看文件中损坏的块
+     */
+    public static RemoteIterator<Path> listCorruptFileBlocks(FileSystemInfo fileSystemInfo, String path) {
+        FileSystem fs = getFileSystem(fileSystemInfo);
+        Path uri = new Path(path);
+        try {
+            pathNotExistCheck(path, fs, uri);
+            return fs.listCorruptFileBlocks(uri);
+        } catch (IOException e) {
+            e.printStackTrace();
+        } finally {
+            closeFileSystem(fs);
+        }
+        return null;
+    }
+
+    /**
+     * 此方法用于查看文件中损坏的块
+     *
+     * @param fileSystemInfo 文件系统信息
+     * @param target         目标文件路径
+     * @param link           link文件路径
+     * @param createParent   是否创建父目录
+     */
+    public static void createSymlink(FileSystemInfo fileSystemInfo, String target, String link, boolean createParent) {
+        FileSystem fs = getFileSystem(fileSystemInfo);
+        Path urit = new Path(target);
+        Path uril = new Path(link);
+        try {
+            pathNotExistCheck(target, fs, urit);
+            fs.createSymlink(urit, uril, createParent);
+        } catch (IOException e) {
+            e.printStackTrace();
+        } finally {
+            closeFileSystem(fs);
+        }
+    }
+
+    /**
+     * 此方法用于判断是否支持Symlink
+     *
+     * @param fileSystemInfo 文件系统信息
+     * @return 是否支持Symlink
+     */
+    public static boolean supportsSymlinks(FileSystemInfo fileSystemInfo) {
+        FileSystem fs = getFileSystem(fileSystemInfo);
+        try {
+            return fs.supportsSymlinks();
+        } finally {
+            closeFileSystem(fs);
+        }
+    }
+
+    /**
      * 此方法用于创建文件夹
      *
      * @param fileSystemInfo 文件系统信息
@@ -320,6 +376,95 @@ public class HdfsUtils {
             closeFileSystem(fs);
         }
         return false;
+    }
+
+    /**
+     * 此方法用于创建文件快照
+     * 需要开启快照支持hdfs dfsadmin -allowSnapshot /path/to/snapshot
+     *
+     * @param fileSystemInfo 文件系统信息
+     * @param path           文件路径
+     * @param snapshotName   快照名称
+     * @return 快照路径
+     */
+    public static Path createSnapshot(FileSystemInfo fileSystemInfo, String path, String snapshotName) {
+        FileSystem fs = getFileSystem(fileSystemInfo);
+        Path uri = new Path(path);
+        try {
+            pathNotExistCheck(path, fs, uri);
+            pathNotDirectoryCheck(path, fs, uri);
+            return fs.createSnapshot(uri, snapshotName);
+        } catch (IOException e) {
+            e.printStackTrace();
+        } finally {
+            closeFileSystem(fs);
+        }
+        return null;
+    }
+
+
+    /**
+     * 此方法用于重命名文件快照
+     *
+     * @param fileSystemInfo  文件系统信息
+     * @param path            文件路径
+     * @param snapshotOldName 旧快照名称
+     * @param snapshotNewName 新快照名称
+     */
+    public static void renameSnapshot(FileSystemInfo fileSystemInfo, String path, String snapshotOldName, String snapshotNewName) {
+        FileSystem fs = getFileSystem(fileSystemInfo);
+        Path uri = new Path(path);
+        try {
+            pathNotExistCheck(path, fs, uri);
+            pathNotDirectoryCheck(path, fs, uri);
+            fs.renameSnapshot(uri, snapshotOldName, snapshotNewName);
+        } catch (IOException e) {
+            e.printStackTrace();
+        } finally {
+            closeFileSystem(fs);
+        }
+    }
+
+    /**
+     * 此方法用于删除文件快照
+     *
+     * @param fileSystemInfo 文件系统信息
+     * @param path           文件路径
+     * @param snapshotName   快照名称
+     */
+    public static void deleteSnapshot(FileSystemInfo fileSystemInfo, String path, String snapshotName) {
+        FileSystem fs = getFileSystem(fileSystemInfo);
+        Path uri = new Path(path);
+        try {
+            pathNotExistCheck(path, fs, uri);
+            pathNotDirectoryCheck(path, fs, uri);
+            fs.deleteSnapshot(uri, snapshotName);
+        } catch (IOException e) {
+            e.printStackTrace();
+        } finally {
+            closeFileSystem(fs);
+        }
+    }
+
+    /**
+     * 此方法用于设置文件的拥有者
+     *
+     * @param fileSystemInfo 文件系统信息
+     * @param path           文件路径
+     * @param user           用户
+     * @param group          用户组
+     */
+    public static void setOwner(FileSystemInfo fileSystemInfo, String path, String user, String group) {
+        FileSystem fs = getFileSystem(fileSystemInfo);
+        Path uri = new Path(path);
+        try {
+            pathNotExistCheck(path, fs, uri);
+            fs.setOwner(uri, user, group);
+        } catch (IOException e) {
+            e.printStackTrace();
+        } finally {
+            closeFileSystem(fs);
+        }
     }
 
     /**
@@ -383,9 +528,7 @@ public class HdfsUtils {
         try {
             //1.检查文件是否合法
             pathNotExistCheck(path, fs, uri);
-            if (fs.isDirectory(uri)) {
-                throw new RuntimeException(NOT_FILE_EXECEPTION_MSG + path);
-            }
+            pathNotFileCheck(path, fs, uri);
             //2.读取文件内容
             IOUtils.copyBytes(fs.open(uri), outputStream, bufferSize, close);
         } catch (IOException e) {
@@ -647,6 +790,34 @@ public class HdfsUtils {
      */
     private static void pathNotExistCheck(String uri, FileSystem fs, Path path) throws IOException {
         if (!fs.exists(path)) {
+            throw new RuntimeException(NOT_EXEXTS_EXECEPTION_MSG + uri);
+        }
+    }
+
+    /**
+     * 此方法用于检测分布式系统中是否是文件夹
+     *
+     * @param uri  uri
+     * @param fs   FileSystem
+     * @param path path
+     * @throws IOException
+     */
+    private static void pathNotDirectoryCheck(String uri, FileSystem fs, Path path) throws IOException {
+        if (!fs.isDirectory(path)) {
+            throw new RuntimeException(NOT_DIR_EXECEPTION_MSG + uri);
+        }
+    }
+
+    /**
+     * 此方法用于检测分布式系统中是否是文件
+     *
+     * @param uri  uri
+     * @param fs   FileSystem
+     * @param path path
+     * @throws IOException
+     */
+    private static void pathNotFileCheck(String uri, FileSystem fs, Path path) throws IOException {
+        if (!fs.isDirectory(path)) {
             throw new RuntimeException(NOT_FILE_EXECEPTION_MSG + uri);
         }
     }
