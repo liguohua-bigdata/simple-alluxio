@@ -646,7 +646,8 @@ public class HdfsAndAlluxioUtils {
      * @param deleteCrc      是否删除本地生成的crc检验文件
      * @param deleteSrcDir   是否删除分布式系统上的文件
      */
-    public static void copyOrMoveToLocalFile(FileSystemInfo fileSystemInfo, String src, String dist, boolean deleteCrc, boolean deleteSrcDir) {
+    public static void copyOrMoveToLocalFile(FileSystemInfo fileSystemInfo, String src,
+    String dist, boolean deleteCrc, boolean deleteSrcDir) {
         FileSystem fs = getFileSystem(fileSystemInfo);
         Path hdfsPath = new Path(src);
         try {
@@ -664,7 +665,8 @@ public class HdfsAndAlluxioUtils {
                 //遍历hdfs的dir中的所有文件
                 FileStatus contents[] = fs.listStatus(hdfsPath);
                 for (int i = 0; i < contents.length; i++) {
-                    copyOrMoveToLocalFile(fileSystemInfo, contents[i].getPath().toString(), dist, deleteCrc, deleteSrcDir);
+                    copyOrMoveToLocalFile(fileSystemInfo, contents[i].getPath().toString(), dist,
+                    deleteCrc, deleteSrcDir);
                 }
             } else {
                 //如果是file
@@ -726,7 +728,8 @@ public class HdfsAndAlluxioUtils {
      * @param dist           分布式系统路径
      * @param delSrc         是否删除本地文件
      */
-    public static void copyOrMoveFromLocalFile(FileSystemInfo fileSystemInfo, String src, String dist, boolean overwrite, boolean delSrc) {
+    public static void copyOrMoveFromLocalFile(FileSystemInfo fileSystemInfo, String src,
+    String dist, boolean overwrite, boolean delSrc) {
         FileSystem fs = getFileSystem(fileSystemInfo);
         //local
         Path localDirOrFilePath = new Path(src);
@@ -753,7 +756,8 @@ public class HdfsAndAlluxioUtils {
                 //遍历本地dir中的所有文件
                 File[] listFiles = localFile.listFiles();
                 for (File f : listFiles) {
-                    copyOrMoveFromLocalFile(fileSystemInfo, f.getAbsolutePath(), convertToPath(dist), overwrite, delSrc);
+                    copyOrMoveFromLocalFile(fileSystemInfo, f.getAbsolutePath(), convertToPath(dist),
+                    overwrite, delSrc);
                 }
             } else {
                 //file
@@ -776,7 +780,8 @@ public class HdfsAndAlluxioUtils {
      * @param overWrite      文件存在是否覆盖
      * @param fileContent    写入文件的内容
      */
-    public static void create(FileSystemInfo fileSystemInfo, String path, boolean overWrite, String fileContent) {
+    public static void create(FileSystemInfo fileSystemInfo, String path, boolean overWrite,
+    String fileContent) {
         FileSystem fs = getFileSystem(fileSystemInfo);
         Path uri = new Path(path);
         FSDataOutputStream output = null;
@@ -898,7 +903,8 @@ public class HdfsAndAlluxioUtils {
      * @param path           文件路径
      * @return 查看文件中损坏的块
      */
-    public static RemoteIterator<Path> listCorruptFileBlocks(FileSystemInfo fileSystemInfo, String path) {
+    public static RemoteIterator<Path> listCorruptFileBlocks(FileSystemInfo fileSystemInfo,
+    String path) {
         FileSystem fs = getFileSystem(fileSystemInfo);
         Path uri = new Path(path);
         try {
@@ -920,7 +926,8 @@ public class HdfsAndAlluxioUtils {
      * @param link           link文件路径
      * @param createParent   是否创建父目录
      */
-    public static void createSymlink(FileSystemInfo fileSystemInfo, String target, String link, boolean createParent) {
+    public static void createSymlink(FileSystemInfo fileSystemInfo, String target, String link,
+    boolean createParent) {
         FileSystem fs = getFileSystem(fileSystemInfo);
         Path urit = new Path(target);
         Path uril = new Path(link);
@@ -980,7 +987,8 @@ public class HdfsAndAlluxioUtils {
      * @param snapshotName   快照名称
      * @return 快照路径
      */
-    public static Path createSnapshot(FileSystemInfo fileSystemInfo, String path, String snapshotName) {
+    public static Path createSnapshot(FileSystemInfo fileSystemInfo, String path,
+    String snapshotName) {
         FileSystem fs = getFileSystem(fileSystemInfo);
         Path uri = new Path(path);
         try {
@@ -1004,7 +1012,8 @@ public class HdfsAndAlluxioUtils {
      * @param snapshotOldName 旧快照名称
      * @param snapshotNewName 新快照名称
      */
-    public static void renameSnapshot(FileSystemInfo fileSystemInfo, String path, String snapshotOldName, String snapshotNewName) {
+    public static void renameSnapshot(FileSystemInfo fileSystemInfo, String path, 
+    String snapshotOldName, String snapshotNewName) {
         FileSystem fs = getFileSystem(fileSystemInfo);
         Path uri = new Path(path);
         try {
@@ -1025,7 +1034,8 @@ public class HdfsAndAlluxioUtils {
      * @param path           文件路径
      * @param snapshotName   快照名称
      */
-    public static void deleteSnapshot(FileSystemInfo fileSystemInfo, String path, String snapshotName) {
+    public static void deleteSnapshot(FileSystemInfo fileSystemInfo, String path,
+    String snapshotName) {
         FileSystem fs = getFileSystem(fileSystemInfo);
         Path uri = new Path(path);
         try {
@@ -1047,7 +1057,8 @@ public class HdfsAndAlluxioUtils {
      * @param user           用户
      * @param group          用户组
      */
-    public static void setOwner(FileSystemInfo fileSystemInfo, String path, String user, String group) {
+    public static void setOwner(FileSystemInfo fileSystemInfo, String path, String user,
+    String group) {
         FileSystem fs = getFileSystem(fileSystemInfo);
         Path uri = new Path(path);
         try {
@@ -1115,7 +1126,8 @@ public class HdfsAndAlluxioUtils {
      * @param bufferSize     输出缓存大小
      * @param close          文件输出后是否关闭输出流
      */
-    public static void open(FileSystemInfo fileSystemInfo, String path, OutputStream outputStream, int bufferSize, boolean close) {
+    public static void open(FileSystemInfo fileSystemInfo, String path, OutputStream outputStream,
+    int bufferSize, boolean close) {
         FileSystem fs = getFileSystem(fileSystemInfo);
         Path uri = new Path(path);
         try {
@@ -1330,7 +1342,8 @@ public class HdfsAndAlluxioUtils {
         System.setProperty("HADOOP_USER_NAME", "root");
         System.setProperty("alluxio.security.login.username", "root");
         Configuration conf = new Configuration();
-        conf.set("fs.defaultFS", fileSystemInfo.getFileSystemType().toLowerCase().trim() + "://" + fileSystemInfo.getMaster().trim() + ":" + fileSystemInfo.getPort());
+        conf.set("fs.defaultFS", fileSystemInfo.getFileSystemType().toLowerCase().trim() 
+        + "://" + fileSystemInfo.getMaster().trim() + ":" + fileSystemInfo.getPort());
         return conf;
     }
 
@@ -1395,7 +1408,8 @@ public class HdfsAndAlluxioUtils {
      * @param path path
      * @throws IOException
      */
-    private static void pathNotDirectoryCheck(String uri, FileSystem fs, Path path) throws IOException {
+    private static void pathNotDirectoryCheck(String uri, FileSystem fs, Path path)
+    throws IOException {
         if (!fs.isDirectory(path)) {
             throw new RuntimeException(NOT_DIR_EXECEPTION_MSG + uri);
         }
@@ -1461,8 +1475,10 @@ package fileSystem.javaapi;
 
 public class HdfsAndAlluxioUtilsTest {
     //0.创建文件系统信息
-    private static HdfsAndAlluxioUtils.FileSystemInfo alluxio = new HdfsAndAlluxioUtils.FileSystemInfo(HdfsAndAlluxioUtils.FileSystemType.ALLUXIO, "qingcheng11", 19998);
-    private static HdfsAndAlluxioUtils.FileSystemInfo hdfs = new HdfsAndAlluxioUtils.FileSystemInfo(HdfsAndAlluxioUtils.FileSystemType.HDFS, "qingcheng11", 9000);
+    private static HdfsAndAlluxioUtils.FileSystemInfo alluxio = new HdfsAndAlluxioUtils.
+    FileSystemInfo(HdfsAndAlluxioUtils.FileSystemType.ALLUXIO, "qingcheng11", 19998);
+    private static HdfsAndAlluxioUtils.FileSystemInfo hdfs = new HdfsAndAlluxioUtils.
+    FileSystemInfo(HdfsAndAlluxioUtils.FileSystemType.HDFS, "qingcheng11", 9000);
 
     public static void main(String[] args) {
         String path = "/input/README.txt";
