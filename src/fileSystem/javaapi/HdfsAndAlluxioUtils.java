@@ -693,7 +693,7 @@ public class HdfsAndAlluxioUtils {
      * @return 文件是否存在
      */
     public static List<FileStatus> listStatus(FileSystemInfo fileSystemInfo, String path) {
-        List<FileStatus> info = new ArrayList<>();
+        List<FileStatus> info = new ArrayList<FileStatus>();
         FileSystem fs = getFileSystem(fileSystemInfo);
         Path uri = new Path(path);
         try {
